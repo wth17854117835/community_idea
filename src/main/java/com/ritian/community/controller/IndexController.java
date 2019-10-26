@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class IndexController {
 
     @GetMapping("/")
-    public String hello() {
+    public String index() {
         return "index";
+    }
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "hello";
     }
 
 }
