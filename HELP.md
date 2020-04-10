@@ -59,3 +59,5 @@ CREATE TABLE user
     gmt_modified bigint
 );
 ```
+##集成flyway
+mvn flyway:migrate

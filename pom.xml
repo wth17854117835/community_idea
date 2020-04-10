@@ -22,7 +22,8 @@
             <id>dev</id>
             <properties>
                 <!--<db.url>jdbc:h2:file:E:/Workspace10_study/ritian/community/db/community</db.url>-->
-                <db.url>jdbc:h2:~/community</db.url>
+                <!--<db.url>jdbc:h2:~/community</db.url>-->
+                <db.url>jdbc:mysql://localhost:3306/community</db.url>
                 <db.user>root</db.user>
                 <db.password>root</db.password>
             </properties>
