@@ -1,9 +1,15 @@
 package com.ritian.community.controller;
 
+import com.ritian.community.mapper.UserMapper;
+import com.ritian.community.pojo.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author: wangth_oup
@@ -13,14 +19,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class IndexController {
 
+    @Resource
+    private UserMapper userMapper;
+
     @GetMapping("/")
-    public String index() {
+    public String index(HttpServletRequest request) {
+        //1.登陆时 将user信息insert数据库
+        //2.将token(UUID随机生成)添加到页面你的cookie里
+        //3.服务器重启时打开index页面，从数据库中根据token查询相关记录，有->直接放到session里，页面直接获取显示session.name 达到不用重新登录的效果
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if(cookie.getName().equals("token")){
+                String token = cookie.getValue();
+                User user = userMapper.findByToken(token);
+                if (user != null) {
+                    request.getSession().setAttribute("user", user);
+                }
+                break;
+            }
+        }
         return "index";
     }
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello";
-    }
+//    @GetMapping("/hello")
+//    public String hello() {
+//        return "hello";
+//    }
 
 }

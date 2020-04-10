@@ -29,8 +29,8 @@ public class GithubUtils {
             String token = str.split("&")[0].split("=")[1];
 //            System.out.println(str);
             return token;
-        } catch (IOException e) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -45,7 +45,7 @@ public class GithubUtils {
             GithubUser githubUser = JSON.parseObject(str, GithubUser.class);
             return githubUser;
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
         return null;
     }
