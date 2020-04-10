@@ -12,4 +12,5 @@ public class GithubUser {
     private Long id;
     private String name;
     private String bio;//描述信息
+    private String avatarUrl;//头像地址
 }

@@ -21,7 +21,7 @@ import java.util.UUID;
 /**
  * @author: wangth_oup
  * @date: 2019-10-26 12:04
- * @description:
+ * @description: 登录github认证授权
  **/
 @Controller
 public class AuthorizeController {
@@ -56,7 +56,7 @@ public class AuthorizeController {
 //        System.out.println(githubUser.getName());
 //        System.out.println(githubUser.getBio());
         //cookie、session使用
-        if(githubUser != null){
+        if(githubUser != null && githubUser.getId() != null){
             //存入h2数据库
             User user = new User();
             user.setName(githubUser.getName());
@@ -65,6 +65,8 @@ public class AuthorizeController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            user.setBio(githubUser.getBio());
+            user.setAvatarUrl(githubUser.getAvatarUrl());
             userMapper.insert(user);
             response.addCookie(new Cookie("token", token));
 //            List<User> userList = userMapper.qryUser();

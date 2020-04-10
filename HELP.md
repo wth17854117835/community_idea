@@ -44,8 +44,9 @@ ___
 ![GitHub登录流程](src/main/resources/static/mdpic/Github登录.png)
 
 ## 工具
-[Visual Paradigm](https://www.visual-paradigm.com)
-[OK Http](https://square.github.io/okhttp/)
+[Visual Paradigm](https://www.visual-paradigm.com)<br>
+[OK Http](https://square.github.io/okhttp/)<br>
+[flyway](https://flywaydb.org/getstarted/)<br>
 
 ##脚本
 ```sql
@@ -60,4 +61,6 @@ CREATE TABLE user
 );
 ```
 ##集成flyway
+```bash
 mvn flyway:migrate
+```
