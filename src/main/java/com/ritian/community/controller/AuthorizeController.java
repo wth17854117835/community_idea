@@ -7,6 +7,7 @@ import com.ritian.community.pojo.User;
 import com.ritian.community.util.GithubUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +22,12 @@ import java.util.UUID;
 /**
  * @author: wangth_oup
  * @date: 2019-10-26 12:04
- * @description: 登录github认证授权
+ * @description: 登录github认证授权。配置文件注入2种方式：
+ *      (1)@ConfigurationProperties(prefix = "")适用于单独编写javaBean来和配置文件映射。
+ *      (2)@Value(${}) 适用于业务逻辑需要获取配置文件中的某项值，复杂类型的获取不到，例如map,list
  **/
 @Controller
+//@ConfigurationProperties(prefix = "github.client")
 public class AuthorizeController {
 
     @Value("${github.client.clientId}")

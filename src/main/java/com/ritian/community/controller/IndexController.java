@@ -1,7 +1,12 @@
 package com.ritian.community.controller;
 
+import com.ritian.community.dto.PaginationDto;
+import com.ritian.community.dto.QuestionDto;
+import com.ritian.community.mapper.QuestionMapper;
 import com.ritian.community.mapper.UserMapper;
+import com.ritian.community.pojo.Question;
 import com.ritian.community.pojo.User;
+import com.ritian.community.service.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author: wangth_oup
@@ -22,8 +28,13 @@ public class IndexController {
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private QuestionService questionService;
+
     @GetMapping("/")
-    public String index(HttpServletRequest request) {
+    public String index(HttpServletRequest request,Model model,
+                        @RequestParam(name = "page",defaultValue = "1") Integer page,
+                        @RequestParam(name = "size",defaultValue = "2") Integer size) {
         //1.登陆时 将user信息insert数据库
         //2.将token(UUID随机生成)添加到页面你的cookie里
         //3.服务器重启时打开index页面，从数据库中根据token查询相关记录，有->直接放到session里，页面直接获取显示session.name 达到不用重新登录的效果
@@ -40,6 +51,9 @@ public class IndexController {
                 }
             }
         }
+
+        PaginationDto paginationDto = questionService.qryAll(page,size);
+        model.addAttribute("paginationDto",paginationDto);
         return "index";
     }
 
