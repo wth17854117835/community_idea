@@ -2,6 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <!--application.properties不生效的解决方法：添加或者将pom改成jar-->
+    <packaging>jar</packaging>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -67,11 +69,11 @@
             <version>1.2.62</version>
         </dependency>
         <!-- h2数据库 -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.199</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.h2database</groupId>-->
+            <!--<artifactId>h2</artifactId>-->
+            <!--<version>1.4.199</version>-->
+        <!--</dependency>-->
         <!--mysql数据库-->
         <dependency>
             <groupId>mysql</groupId>
@@ -133,29 +135,29 @@
                         <artifactId>mysql-connector-java</artifactId>
                         <version>5.1.45</version>
                     </dependency>
-                    <dependency>
-                        <groupId>com.h2database</groupId>
-                        <artifactId>h2</artifactId>
-                        <version>1.4.199</version>
-                    </dependency>
+                    <!--<dependency>-->
+                        <!--<groupId>com.h2database</groupId>-->
+                        <!--<artifactId>h2</artifactId>-->
+                        <!--<version>1.4.199</version>-->
+                    <!--</dependency>-->
                 </dependencies>
             </plugin>
         </plugins>
     </build>
 
     <!--在pom文件中添加一个远程仓库-->
-    <repositories>
-        <repository>
-            <id>alimaven</id>
-            <name>Maven Aliyun Mirror</name>
-            <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>alimaven</id>-->
+            <!--<name>Maven Aliyun Mirror</name>-->
+            <!--<url>http://maven.aliyun.com/nexus/content/repositories/central/</url>-->
+            <!--<releases>-->
+                <!--<enabled>true</enabled>-->
+            <!--</releases>-->
+            <!--<snapshots>-->
+                <!--<enabled>false</enabled>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 
 </project>

@@ -38,19 +38,19 @@ public class IndexController {
         //1.登陆时 将user信息insert数据库
         //2.将token(UUID随机生成)添加到页面你的cookie里
         //3.服务器重启时打开index页面，从数据库中根据token查询相关记录，有->直接放到session里，页面直接获取显示session.name 达到不用重新登录的效果
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length !=0) {
-            for (Cookie cookie : cookies) {
-                if(cookie.getName().equals("token")){
-                    String token = cookie.getValue();
-                    User user = userMapper.findByToken(token);
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+//        Cookie[] cookies = request.getCookies();
+//        if (cookies != null && cookies.length !=0) {
+//            for (Cookie cookie : cookies) {
+//                if(cookie.getName().equals("token")){
+//                    String token = cookie.getValue();
+//                    User user = userMapper.findByToken(token);
+//                    if (user != null) {
+//                        request.getSession().setAttribute("user", user);
+//                    }
+//                    break;
+//                }
+//            }
+//        }
 
         PaginationDto paginationDto = questionService.qryAll(page,size);
         model.addAttribute("paginationDto",paginationDto);

@@ -4,6 +4,7 @@ import com.ritian.community.dto.AccessTokenDTO;
 import com.ritian.community.dto.GithubUser;
 import com.ritian.community.mapper.UserMapper;
 import com.ritian.community.pojo.User;
+import com.ritian.community.service.UserService;
 import com.ritian.community.util.GithubUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,15 +33,18 @@ public class AuthorizeController {
 
     @Value("${github.client.clientId}")
     private String clientId;
+//    private String clientId = "74897f8eb3f06d9a9731";
     @Value("${github.client.secret}")
     private String clientSecret;
+//    private String clientSecret = "ef36072b2c9b057abf7a98f530456db805386196";
     @Value("${github.client.redirect_uri}")
     private String redirectUri;
+//    private String redirectUri = "http://localhost:8887/callback";
 
     @Autowired
     private GithubUtils githubUtils;
     @Resource
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name="code")String code,
@@ -67,11 +71,9 @@ public class AuthorizeController {
             String token = UUID.randomUUID().toString();
             user.setToken(token);
             user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setBio(githubUser.getBio());
             user.setAvatarUrl(githubUser.getAvatarUrl());
-            userMapper.insert(user);
+            userService.createOrUpdate(user);
             response.addCookie(new Cookie("token", token));
 //            List<User> userList = userMapper.qryUser();
 //            System.out.println(userList);
@@ -85,5 +87,21 @@ public class AuthorizeController {
            //登录失败,重新登录
             return "redirect:/";
         }
+    }
+
+    /**
+     * 退出登录
+     */
+    @GetMapping("/logOut")
+    public String logOut(HttpServletRequest request,HttpServletResponse response) {
+        //1.移除浏览器的session
+        request.getSession().removeAttribute("user");
+        //2.移除cookie
+        //2.1重新建立一个同名立即删除类型的cookie
+        Cookie token = new Cookie("token", null);
+        //2.2立即删除型
+        token.setMaxAge(0);
+        response.addCookie(token);
+        return "redirect:/";
     }
 }
