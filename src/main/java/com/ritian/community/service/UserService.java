@@ -5,6 +5,7 @@ import com.ritian.community.pojo.User;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author: wangth_oup
@@ -32,5 +33,25 @@ public class UserService {
             dbUser.setToken(user.getToken());
             userMapper.update(dbUser);
         }
+//        UserExample example = new UserExample();
+//        UserExample.Criteria criteria = example.createCriteria();
+//        criteria.andAccountIdEqualTo(user.getAccountId());
+//        List<com.ritian.community.mybatis.pojo.User> users = userMapper.selectByExample(example);
+//        if(users.size() == 0){
+//            //新增
+//            user.setGmtCreate(System.currentTimeMillis());
+//            user.setGmtModified(user.getGmtCreate());
+//            userMapper.insert(user);
+//        } else {
+//            //更新
+//            com.ritian.community.mybatis.pojo.User dbUser = new com.ritian.community.mybatis.pojo.User();
+//            dbUser.setGmtModified(System.currentTimeMillis());
+//            dbUser.setAvatarUrl(user.getAvatarUrl());
+//            dbUser.setName(user.getName());
+//            dbUser.setToken(user.getToken());
+//            UserExample userExample = new UserExample();
+//            example.createCriteria().andIdEqualTo(users.get(0).getId());
+//            userMapper.updateByExampleSelective(dbUser,userExample);
+//        }
     }
 }

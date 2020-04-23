@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.ritian.community.mybatis.mapper")
+//@MapperScan(basePackages = {"com.ritian.community.mybatis.mapper","com.ritian.community.mapper"})
 public class CommunityApplication {
 
     public static void main(String[] args) {

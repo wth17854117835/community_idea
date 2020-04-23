@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author: wangth_oup
@@ -35,6 +36,14 @@ public class SessionInterceptor implements HandlerInterceptor {
                     if (user != null) {
                         request.getSession().setAttribute("user", user);
                     }
+                    //使用mybatis逆向工程生成的mapper
+//                    UserExample example = new UserExample();
+//                    UserExample.Criteria criteria = example.createCriteria();
+//                    criteria.andTokenEqualTo(token);
+//                    List<User> users = userMapper.selectByExample(example);
+//                    if(users.size() != 0){
+//                        request.getSession().setAttribute("user", users.get(0));
+//                    }
                     break;
                 }
             }
