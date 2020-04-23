@@ -47,6 +47,7 @@ ___
 [Visual Paradigm](https://www.visual-paradigm.com)<br>
 [OK Http](https://square.github.io/okhttp/)<br>
 [flyway](https://flywaydb.org/getstarted/)<br>
+[mybatis-generator](http://mybatis.org/generator/)<br>
 
 ##脚本
 ```sql
@@ -63,4 +64,8 @@ CREATE TABLE user
 ##集成flyway
 ```bash
 mvn flyway:migrate
+```
+##使用mybatis-generator
+```bash
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 ```

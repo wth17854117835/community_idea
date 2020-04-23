@@ -1,12 +1,15 @@
 package com.ritian.community.controller;
 
+import com.ritian.community.dto.QuestionDto;
 import com.ritian.community.mapper.QuestionMapper;
 import com.ritian.community.mapper.UserMapper;
 import com.ritian.community.pojo.Question;
 import com.ritian.community.pojo.User;
+import com.ritian.community.service.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,12 +26,26 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class PublishController {
 
-    @Resource
-    private QuestionMapper questionMapper;
+//    @Resource
+//    private QuestionMapper questionMapper;
 
     @Resource
-    private UserMapper userMapper;
+    private QuestionService questionService;
 
+//    @Resource
+//    private UserMapper userMapper;
+
+
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable(name = "id") Integer id, Model model){
+        QuestionDto question = questionService.getById(id);
+        model.addAttribute("title",question.getTitle());
+        model.addAttribute("description",question.getDescription());
+        model.addAttribute("tag",question.getTag());
+        //修改的时候添加一个id标识，区别修改问题 还是 新创建问题
+        model.addAttribute("id",question.getId());
+        return "publish";
+    }
 
     @GetMapping("/publish")
     public String publish(){
@@ -39,6 +56,7 @@ public class PublishController {
     public String doPublish(@RequestParam(value = "title",required = false) String title,
                             @RequestParam(value = "description",required = false) String description,
                             @RequestParam(value = "tag",required = false) String tag,
+                            @RequestParam(value = "id",required = false) Integer id,
                             HttpServletRequest request,
                             Model model){
         model.addAttribute("title",title);
@@ -83,9 +101,9 @@ public class PublishController {
         question.setDescription(description);
         question.setTag(tag);
         question.setCreator(user.getId());
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
-        questionMapper.create(question);
+
+        question.setId(id);
+        questionService.createOrUpdate(question);
         return "redirect:/";
     }
 }

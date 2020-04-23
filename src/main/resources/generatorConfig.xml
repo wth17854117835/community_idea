@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!--在pom.xml指定数据库驱动，此处不需要-->
+    <!--<classPathEntry location="D:\maven-repository-sitech\repository\mysql\mysql-connector-java\5.1.45\mysql-connector-java-5.1.45.jar" />-->
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/community"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <!--将数据库DECIMAL、NUMERIC类型 转为 java的BigDecimal类型-->
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--生成java的模型pojo-->
+        <!-- 生成实体类的包名和位置 注意targetProject的值为实体类放在工程中具体位置的相对路径，-->
+        <javaModelGenerator targetPackage="com.ritian.community.mybatis.pojo" targetProject="src\main\java">
+            <!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+            <property name="enableSubPackages" value="true" />
+            <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--XML映射文件,生成的位置（目标包）,源代码文件夹-->
+        <sqlMapGenerator targetPackage="mybatis.mapper"  targetProject="src\main\resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!--XML对应的Mapper类-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.ritian.community.mybatis.mapper"  targetProject="src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!--下面是数据库表名和项目中需要生成类的名称，建议和数据库保持一致，如果有多个表，添加多个节点即可   enable*ByExample
+                是否生成 example类  schema="dbobdsadm"-->
+        <!--<table  tableName="user_info" domainObjectName="UserInfo" enableCountByExample="false" enableSelectByExample="true" enableUpdateByExample="false" enableDeleteByExample="false">-->
+        <table tableName="user" domainObjectName="User" >
+            <!--<property name="useActualColumnNames" value="true"/>-->
+            <!--<generatedKey column="ID" sqlStatement="DB2" identity="true" />-->
+            <!--<columnOverride column="DATE_FIELD" property="startDate" />-->
+            <!--<ignoreColumn column="FRED" />-->
+            <!--<columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />-->
+        </table>
+
+    </context>
+</generatorConfiguration>
